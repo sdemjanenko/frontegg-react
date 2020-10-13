@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { SelectProps, SelectOptionProps } from './interfaces';
 import Select, { components, MultiValueProps } from 'react-select';
+import { useT } from '../../hooks';
 
 export const FeSelect = (props: SelectProps) => {
   const [open, setOpen] = useState(false);
+  const { t } = useT();
   const {
     label,
     value,
@@ -28,7 +30,7 @@ export const FeSelect = (props: SelectProps) => {
         option.selectProps.options &&
         option.selectProps.options.findIndex((o: SelectOptionProps<string>) => o.value === option.selectProps.value),
     }),
-    [],
+    []
   );
 
   const MultiValueLabel = useCallback(
@@ -37,7 +39,7 @@ export const FeSelect = (props: SelectProps) => {
         {renderOption && renderOption(props.data, getState(props))}
       </components.MultiValueLabel>
     ),
-    [renderOption],
+    [renderOption]
   );
 
   return (
@@ -48,10 +50,10 @@ export const FeSelect = (props: SelectProps) => {
       components={renderOption ? { MultiValueLabel } : {}}
       options={options}
       isLoading={loading ?? false}
-      loadingMessage={() => loadingText ?? 'Loading...'}
+      loadingMessage={() => loadingText ?? `${t('common.loading')}...`}
       closeMenuOnSelect={false}
       open={openProps ?? open}
-      noOptionsMessage={() => noOptionsText ?? 'Empty'}
+      noOptionsMessage={() => noOptionsText ?? t('common.empty-items')}
       onMenuOpen={() => (onOpen ? onOpen : setOpen(true))}
       onMenuClose={() => (onClose ? onClose : setOpen(false))}
       onChange={(newValues, e: any) => onChange(e, newValues)}
