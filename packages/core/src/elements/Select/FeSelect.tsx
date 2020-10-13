@@ -44,7 +44,7 @@ export const FeSelect = (props: SelectProps) => {
 
   return (
     <Select
-      isMulti={multiselect ?? true}
+      isMulti={multiselect ?? false}
       placeholder={label}
       value={value}
       components={renderOption ? { MultiValueLabel } : {}}

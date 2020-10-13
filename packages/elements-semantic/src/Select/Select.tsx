@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useMemo, useState } from 'react';
-import { Dropdown, DropdownProps } from 'semantic-ui-react';
+import { Dropdown, DropdownProps, Flag, Image } from 'semantic-ui-react';
 import { SelectProps, SelectOptionProps, useT } from '@frontegg/react-core';
 
 const mapper = ({ multiselect, options, getOptionLabel, onChange, ...rest }: SelectProps): DropdownProps => {
@@ -19,9 +19,21 @@ const mapper = ({ multiselect, options, getOptionLabel, onChange, ...rest }: Sel
 };
 
 export const Select = (props: SelectProps) => {
+  const [open, setOpen] = useState(false);
   const p = mapper(props);
   const { t } = useT();
-  const { multiple, options, label, loading, onChange, onOpen, onClose, open, getOptionLabel, renderOption } = p;
+  const {
+    multiple,
+    options,
+    label,
+    loading,
+    onChange,
+    onOpen,
+    onClose,
+    open: openProps,
+    getOptionLabel,
+    renderOption,
+  } = p;
   const { value, noOptionsText, loadingText } = props;
   const handleOnChange = useCallback(
     (e, data) => {
@@ -38,21 +50,40 @@ export const Select = (props: SelectProps) => {
     }
   }, [loading, loadingText, noOptionsText]);
 
+  const renderLabel = useCallback((option, state) => {
+    const { flag, image, text } = option;
+    return renderOption
+      ? {
+          content: <>{renderOption({ label: option.text, value: option.value }, state)}</>,
+        }
+      : {
+          content: (
+            <>
+              {/*@ts-ignore*/}
+              {Flag.create(flag)}
+              {/*@ts-ignore*/}
+              {Image.create(image)}
+              {text}
+            </>
+          ),
+        };
+  }, []);
+
   return (
     <Dropdown
       search
       fluid
       selection
       value={value}
-      open={open}
+      open={openProps ?? open}
       options={options}
       loading={loading}
-      onOpen={onOpen}
-      onClose={onClose}
+      onOpen={() => (onOpen ? onOpen : setOpen(true))}
+      onClose={() => (onClose ? onClose : setOpen(false))}
       multiple={multiple ?? false}
       placeholder={value && value.length ? '' : label}
       onChange={(e, data) => handleOnChange(e, data.value)}
-      renderLabel={(option, _index, state) => renderOption({ label: option.text, value: option.value }, state)}
+      renderLabel={(option, _index, state) => renderLabel(option, state)}
       noResultsMessage={optionsMessage}
       getoptionlabel={getOptionLabel}
     />

@@ -30,6 +30,9 @@ const top100Films = [
 
 export const SelectorExample: FC = () => {
   const [value, setValue] = useState<Array<any>>([]);
+  const [semanticValue, setSemanticValue] = useState<Array<any>>([]);
+  const [materialValue, setMaterialvalue] = useState<Array<any>>([]);
+
   const [open, setOpen] = useState({
     material: false,
     semantic: false,
@@ -50,14 +53,19 @@ export const SelectorExample: FC = () => {
   };
 
   const renderOption = (option: any, state: any) => {
-    console.log(option, state, 'option, state');
-    // console.log(option, state);
     return <span style={{ background: 'pink' }}>{option.label}</span>;
   };
 
   const onChange = useCallback((_e, newValue: Array<any>) => {
-    console.log(newValue);
     setValue(newValue);
+  }, []);
+
+  const onSmanticChange = useCallback((_e, newValue: Array<any>) => {
+    setSemanticValue(newValue);
+  }, []);
+
+  const onMaterialChange = useCallback((_e, newValue: Array<any>) => {
+    setMaterialvalue(newValue);
   }, []);
 
   return (
@@ -72,8 +80,8 @@ export const SelectorExample: FC = () => {
         onClose={onCloseMaterial}
         multiselect={true}
         options={top100Films}
-        value={value}
-        onChange={onChange}
+        value={materialValue}
+        onChange={onMaterialChange}
         getOptionLabel={getOptionLabel}
         // renderOption={renderOption}
       />
@@ -107,8 +115,8 @@ export const SelectorExample: FC = () => {
         onClose={onCloseSemantic}
         multiselect={true}
         options={top100Films}
-        value={value}
-        onChange={onChange}
+        value={semanticValue}
+        onChange={onSmanticChange}
         getOptionLabel={getOptionLabel}
         renderOption={renderOption}
       />
