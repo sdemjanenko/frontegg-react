@@ -73,11 +73,11 @@ export const SelectorExample: FC = () => {
       <ME.Select
         size='small'
         label='Selector'
-        open={open.material}
+        // open={open.material}
         loading={loading}
-        onOpen={onOpenMaterial}
+        // onOpen={onOpenMaterial}
         theme='danger'
-        onClose={onCloseMaterial}
+        // onClose={onCloseMaterial}
         multiselect={true}
         options={top100Films}
         value={materialValue}
@@ -111,8 +111,8 @@ export const SelectorExample: FC = () => {
         open={open.semantic}
         loading={loading}
         onOpen={onOpenSemantic}
-        theme='secondary'
         onClose={onCloseSemantic}
+        theme='secondary'
         multiselect={true}
         options={top100Films}
         value={semanticValue}

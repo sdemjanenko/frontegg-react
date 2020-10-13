@@ -22,19 +22,8 @@ export const Select = (props: SelectProps) => {
   const [open, setOpen] = useState(false);
   const p = mapper(props);
   const { t } = useT();
-  const {
-    multiple,
-    options,
-    label,
-    loading,
-    onChange,
-    onOpen,
-    onClose,
-    open: openProps,
-    getOptionLabel,
-    renderOption,
-  } = p;
-  const { value, noOptionsText, loadingText } = props;
+  const { multiple, options, label, loading, onChange, getOptionLabel, renderOption } = p;
+  const { value, noOptionsText, loadingText, onOpen, open: openProps, onClose } = props;
   const handleOnChange = useCallback(
     (e, data) => {
       onChange && onChange(e, data);
@@ -78,8 +67,8 @@ export const Select = (props: SelectProps) => {
       open={openProps ?? open}
       options={options}
       loading={loading}
-      onOpen={() => (onOpen ? onOpen : setOpen(true))}
-      onClose={() => (onClose ? onClose : setOpen(false))}
+      onOpen={() => (onOpen ? onOpen() : setOpen(true))}
+      onClose={() => (onClose ? onClose() : setOpen(false))}
       multiple={multiple ?? false}
       placeholder={value && value.length ? '' : label}
       onChange={(e, data) => handleOnChange(e, data.value)}
