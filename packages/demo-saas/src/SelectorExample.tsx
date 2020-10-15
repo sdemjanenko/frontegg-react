@@ -30,8 +30,6 @@ const top100Films = [
 
 export const SelectorExample: FC = () => {
   const [value, setValue] = useState<Array<any>>([]);
-  const [semanticValue, setSemanticValue] = useState<Array<any>>([]);
-  const [materialValue, setMaterialvalue] = useState<Array<any>>([]);
 
   const [open, setOpen] = useState({
     material: false,
@@ -40,13 +38,6 @@ export const SelectorExample: FC = () => {
   });
 
   const [loading, setLoading] = useState(false);
-
-  const onOpenMaterial = () => setOpen({ material: true, core: false, semantic: false });
-  const onCloseMaterial = () => setOpen({ material: false, core: false, semantic: false });
-  const onOpenSemantic = () => setOpen({ material: false, core: false, semantic: true });
-  const onCloseSemantic = () => setOpen({ material: false, core: false, semantic: false });
-  const onOpenCore = () => setOpen({ material: false, core: true, semantic: false });
-  const onCloseCore = () => setOpen({ material: false, core: false, semantic: false });
 
   const getOptionLabel = (option: any) => {
     return option.label;
@@ -60,19 +51,12 @@ export const SelectorExample: FC = () => {
     setValue(newValue);
   }, []);
 
-  const onSmanticChange = useCallback((_e, newValue: Array<any>) => {
-    setSemanticValue(newValue);
-  }, []);
-
-  const onMaterialChange = useCallback((_e, newValue: Array<any>) => {
-    setMaterialvalue(newValue);
-  }, []);
-
   return (
     <div style={{ margin: '30px' }}>
       <ME.Select
         size='small'
         label='Selector'
+        fullWidth={false}
         // open={open.material}
         loading={loading}
         // onOpen={onOpenMaterial}
@@ -80,8 +64,8 @@ export const SelectorExample: FC = () => {
         // onClose={onCloseMaterial}
         multiselect={true}
         options={top100Films}
-        value={materialValue}
-        onChange={onMaterialChange}
+        value={value}
+        onChange={onChange}
         getOptionLabel={getOptionLabel}
         // renderOption={renderOption}
       />
@@ -91,12 +75,13 @@ export const SelectorExample: FC = () => {
       <FE.Select
         size='medium'
         label='Selector'
-        open={open.core}
+        // open={open.core}
         loading={loading}
-        onOpen={onOpenCore}
+        // onOpen={onOpenCore}
         theme='secondary'
-        onClose={onCloseCore}
+        // onClose={onCloseCore}
         multiselect={true}
+        fullWidth={false}
         options={top100Films}
         value={value}
         onChange={onChange}
@@ -108,17 +93,18 @@ export const SelectorExample: FC = () => {
       <SE.Select
         size='medium'
         label='Selector'
-        open={open.semantic}
+        fullWidth={false}
+        // open={open.semantic}
+        // onOpen={onOpenSemantic}
+        // onClose={onCloseSemantic}
         loading={loading}
-        onOpen={onOpenSemantic}
-        onClose={onCloseSemantic}
         theme='secondary'
         multiselect={true}
         options={top100Films}
-        value={semanticValue}
-        onChange={onSmanticChange}
+        value={value}
+        onChange={onChange}
         getOptionLabel={getOptionLabel}
-        renderOption={renderOption}
+        // renderOption={renderOption}
       />
     </div>
   );

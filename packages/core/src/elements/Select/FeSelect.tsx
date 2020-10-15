@@ -20,15 +20,16 @@ export const FeSelect = (props: SelectProps) => {
     multiselect,
     getOptionLabel,
     renderOption,
+    fullWidth,
   } = props;
 
   const getState = useCallback(
     (option: MultiValueProps<any> | any) => ({
       selected: option.selectProps.isSelected,
       disabled: option.selectProps.isDisabled,
-      index:
-        option.selectProps.options &&
-        option.selectProps.options.findIndex((o: SelectOptionProps<string>) => o.value === option.selectProps.value),
+      index: option.selectProps.options?.findIndex(
+        (o: SelectOptionProps<string>) => o.value === option.selectProps.value
+      ),
     }),
     []
   );
@@ -42,17 +43,28 @@ export const FeSelect = (props: SelectProps) => {
     [renderOption]
   );
 
+  const customStyles = {
+    container: (provided: any, { selectProps: { width } }: any) => ({
+      ...provided,
+      minWidth: '14em',
+      width: width,
+      maxWidth: '100%',
+    }),
+  };
+
   return (
     <Select
+      styles={customStyles}
       isMulti={multiselect ?? false}
       placeholder={label}
+      width={fullWidth ? '100%' : 'max-content'}
       value={value}
       components={renderOption ? { MultiValueLabel } : {}}
       options={options}
       isLoading={loading ?? false}
-      loadingMessage={() => loadingText ?? `${t('common.loading')}...`}
       closeMenuOnSelect={false}
       open={openProps ?? open}
+      loadingMessage={() => loadingText ?? `${t('common.loading')}...`}
       noOptionsMessage={() => noOptionsText ?? t('common.empty-items')}
       onMenuOpen={() => (onOpen ? onOpen : setOpen(true))}
       onMenuClose={() => (onClose ? onClose : setOpen(false))}

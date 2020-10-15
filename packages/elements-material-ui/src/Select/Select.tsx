@@ -21,12 +21,14 @@ export const Select: FC<SelectProps> = (props) => {
 
   const {
     size,
+    value,
     loading,
     onChange,
     options,
     onOpen,
     onClose,
     multiple,
+    fullWidth,
     loadingText,
     renderOption,
     noOptionsText,
@@ -55,8 +57,10 @@ export const Select: FC<SelectProps> = (props) => {
       multiple={multiple ?? false}
       options={options}
       size={size}
+      value={value}
       loading={loading}
       disableCloseOnSelect
+      filterSelectedOptions
       open={propOpen ?? open}
       loadingText={loadingText ?? `${t('common.loading')}...`}
       noOptionsText={noOptionsText ?? t('common.empty-items')}
@@ -69,6 +73,8 @@ export const Select: FC<SelectProps> = (props) => {
         <TextField
           {...params}
           label={props.label}
+          fullWidth={fullWidth ?? true}
+          style={{ minWidth: `${fullWidth ? '100%' : '14em'}` }}
           variant='standard'
           color={color}
           InputProps={{
