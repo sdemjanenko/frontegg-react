@@ -1,5 +1,27 @@
-.fe-input label {
-  font-weight: normal !important;
-  font-size: 0.8em !important;
-  display: block;
+.fe-semantic-input__labels {
+  display: flex;
+}
+
+.fe-semantic-input__label-button {
+  margin-left: auto;
+
+  > button.button {
+    padding: 0.25rem;
+    background: transparent !important;
+    float: right;
+    margin-right: 0;
+    font-size: 0.85rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.fe-semantic-input.ui.icon.input,
+.form .fe-semantic-input .ui.icon.input {
+  > i.icon.fe-semantic-input__icon:not(.link) {
+    pointer-events: all;
+    cursor: pointer;
+  }
 }
